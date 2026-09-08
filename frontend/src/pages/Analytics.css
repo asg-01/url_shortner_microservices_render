@@ -1,0 +1,130 @@
+.analytics-page {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.analytics-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+  color: var(--color-purple);
+}
+
+.analytics-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.5px;
+}
+
+.analytics-sub {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+.analytics-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.analytics-stat-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+}
+
+.analytics-stat-icon {
+  color: var(--color-purple);
+  background: var(--color-purple-glow);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  display: flex;
+}
+
+.analytics-stat-value {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-text-primary);
+}
+
+.analytics-stat-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.analytics-chart-section {
+  padding: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+.analytics-chart-title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin-bottom: var(--space-lg);
+}
+
+.analytics-chart-placeholder {
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.analytics-coming-soon {
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.analytics-coming-soon h4 {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin: var(--space-md) 0 var(--space-sm);
+}
+
+.analytics-coming-soon p {
+  font-size: var(--font-size-sm);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.analytics-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.analytics-section {
+  padding: var(--space-xl);
+}
+
+.analytics-empty-section {
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.analytics-empty-section p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .analytics-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

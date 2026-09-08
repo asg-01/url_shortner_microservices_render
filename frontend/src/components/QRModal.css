@@ -1,0 +1,55 @@
+.qr-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.qr-canvas-wrapper {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-md);
+}
+
+.qr-url {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  word-break: break-all;
+  text-align: center;
+}
+
+.qr-actions {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.qr-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+.qr-btn-download {
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+}
+.qr-btn-download:hover {
+  background: var(--color-accent-hover);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.qr-btn-share {
+  background: var(--color-bg-glass);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+.qr-btn-share:hover {
+  background: var(--color-bg-glass-hover);
+}

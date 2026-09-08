@@ -1,0 +1,145 @@
+.redirect-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-primary);
+}
+
+.redirect-card {
+  text-align: center;
+  padding: var(--space-3xl);
+  animation: fadeInUp 0.5s ease forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.redirect-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  margin-bottom: var(--space-md);
+  letter-spacing: -0.5px;
+}
+
+.redirect-sub {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+}
+
+.redirect-error-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-error);
+  margin-bottom: var(--space-md);
+}
+
+.redirect-error-text {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.redirect-home-link {
+  display: inline-flex;
+  padding: 10px 28px;
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+.redirect-home-link:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-bg-primary);
+}
+
+.redirect-blocked-icon {
+  color: var(--color-danger);
+  margin-bottom: var(--space-xl);
+  background: rgba(255, 87, 87, 0.1);
+  padding: var(--space-xl);
+  border-radius: 50%;
+}
+
+/* 3D Isometric Animation */
+.redirect-tetrominos {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: var(--space-2xl);
+  transform-style: preserve-3d;
+  transform: rotateX(60deg) rotateZ(-45deg);
+}
+
+.redirect-tetromino {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #a7e245; /* Top face */
+  transform-style: preserve-3d;
+  box-shadow: 
+    inset 0 0 0 1px rgba(0,0,0,0.1),
+    -10px 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Side faces of the cube using pseudo elements */
+.redirect-tetromino::before,
+.redirect-tetromino::after {
+  content: '';
+  position: absolute;
+  display: block;
+}
+
+/* Left face */
+.redirect-tetromino::before {
+  width: 20px;
+  height: 50px;
+  background-color: #8cc430; /* Darker green */
+  transform-origin: left top;
+  transform: rotateY(-90deg);
+  left: 0;
+  top: 0;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+/* Bottom/Front face */
+.redirect-tetromino::after {
+  width: 50px;
+  height: 20px;
+  background-color: #72a120; /* Darkest green */
+  transform-origin: left bottom;
+  transform: rotateX(-90deg);
+  left: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+/* Positions for a 2x2 grid */
+.redirect-box1 { top: 0; left: 0; animation: isoFloat1 2s ease-in-out infinite; }
+.redirect-box2 { top: 0; left: 52px; animation: isoFloat2 2s ease-in-out infinite; }
+.redirect-box3 { top: 52px; left: 0; animation: isoFloat3 2s ease-in-out infinite; }
+.redirect-box4 { top: 52px; left: 52px; animation: isoFloat4 2s ease-in-out infinite; }
+
+@keyframes isoFloat1 {
+  0%, 100% { transform: translateZ(0); }
+  25% { transform: translateZ(20px); }
+}
+@keyframes isoFloat2 {
+  0%, 100% { transform: translateZ(0); }
+  50% { transform: translateZ(20px); }
+}
+@keyframes isoFloat3 {
+  0%, 100% { transform: translateZ(0); }
+  75% { transform: translateZ(20px); }
+}
+@keyframes isoFloat4 {
+  0%, 100% { transform: translateZ(0); }
+  50% { transform: translateZ(20px); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,92 @@
+.edit-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.edit-modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.edit-modal-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+
+.edit-modal-code {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-accent);
+  font-family: monospace;
+}
+
+.edit-modal-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-modal-input {
+  padding: var(--space-md);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+.edit-modal-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-glow);
+}
+
+.edit-modal-error {
+  margin-top: var(--space-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+}
+
+.edit-modal-actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: flex-end;
+}
+
+.edit-btn-cancel,
+.edit-btn-save {
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  border: none;
+  transition: all var(--transition-fast);
+}
+
+.edit-btn-cancel {
+  background: var(--color-bg-glass);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+.edit-btn-cancel:hover:not(:disabled) {
+  background: var(--color-bg-glass-hover);
+}
+
+.edit-btn-save {
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+}
+.edit-btn-save:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+.edit-btn-save:disabled,
+.edit-btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
