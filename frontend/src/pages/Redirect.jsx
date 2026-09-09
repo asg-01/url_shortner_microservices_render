@@ -81,6 +81,7 @@ const Redirect = () => {
   const analyticsTracked = useRef(false);
 
   const GATEWAY_URL = import.meta.env.VITE_GATEWAY_URL || 'http://localhost:8080';
+  const sanitizedGatewayUrl = GATEWAY_URL.replace(/\/+$/, '');
 
   useEffect(() => {
     if (!shortCode || shortCode.length !== 6) {
@@ -90,8 +91,8 @@ const Redirect = () => {
 
     const checkStatus = async () => {
       try {
-        // Query the new status API
-        const res = await fetch(`${GATEWAY_URL}/api/redirect/${shortCode}/status`);
+        // Query the new status API (ensure no double slashes)
+        const res = await fetch(`${sanitizedGatewayUrl}/api/redirect/${shortCode}/status`);
         
         if (res.status === 403) {
           setErrorStatus(403);
@@ -100,9 +101,8 @@ const Redirect = () => {
         } else if (res.status === 410) {
           setErrorStatus(410);
         } else if (res.ok) {
-          const data = await res.json();
-          // Valid redirect — fire analytics then navigate
-          await fireAnalyticsAndRedirect(data.originalUrl);
+          // Status API just returns {"active":true}, so we don't need to parse originalUrl
+          await fireAnalyticsAndRedirect();
         } else {
           // Unknown error, just default to 404
           setErrorStatus(404);
@@ -113,7 +113,7 @@ const Redirect = () => {
       }
     };
 
-    const fireAnalyticsAndRedirect = async (originalUrl) => {
+    const fireAnalyticsAndRedirect = async () => {
       // Guard: only fire analytics once per mount
       if (analyticsTracked.current) return;
       analyticsTracked.current = true;
@@ -124,17 +124,12 @@ const Redirect = () => {
       // Fire analytics tracking (fire-and-forget, non-blocking)
       await trackRedirect(shortCode, region);
 
-      // Navigate to the actual redirect URL
-      if (originalUrl) {
-        window.location.href = originalUrl;
-      } else {
-        // Fallback if backend doesn't return originalUrl
-        window.location.href = `${GATEWAY_URL}/${shortCode}`;
-      }
+      // Navigate to the actual redirect URL handled by backend
+      window.location.href = `${sanitizedGatewayUrl}/${shortCode}`;
     };
 
     checkStatus();
-  }, [shortCode, GATEWAY_URL]);
+  }, [shortCode, sanitizedGatewayUrl]);
 
   const isLoggedIn = !!localStorage.getItem('token');
 
