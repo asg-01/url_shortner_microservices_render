@@ -388,13 +388,114 @@
 }
 
 @media (max-width: 500px) {
+  .auth-container {
+    padding: var(--space-md);
+  }
+  
+  .auth-brand {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-lg);
+  }
+
   .form {
     min-width: unset;
     width: 90vw;
-    max-width: 340px;
+    max-width: 360px;
+    padding: var(--space-lg) var(--space-md);
+    margin-top: 30px;
   }
+  
   .auth-back-link {
     top: var(--space-md);
     left: var(--space-md);
+  }
+  
+  .switcher {
+    font-size: var(--font-size-xs);
+  }
+
+  .form-wrapper.is-active .switcher-login {
+    transform: translateX(65px);
+  }
+
+  .form-wrapper.is-active .switcher-signup {
+    transform: translateX(-65px);
+  }
+
+  /* Reduce animation travel distance on mobile to prevent excessive horizontal movement/overflow */
+  @keyframes showLogin {
+    0% {
+      background: var(--color-bg-secondary);
+      transform: translate(20%, 10px);
+    }
+    50% {
+      transform: translate(0, 0);
+    }
+    100% {
+      background: var(--color-bg-card);
+      transform: translate(15%, -10px);
+    }
+  }
+
+  @keyframes hideLogin {
+    0% {
+      background: var(--color-bg-card);
+      transform: translate(15%, -10px);
+    }
+    50% {
+      transform: translate(0, 0);
+    }
+    100% {
+      background: var(--color-bg-secondary);
+      transform: translate(20%, 10px);
+    }
+  }
+
+  @keyframes showSignup {
+    0% {
+      background: var(--color-bg-secondary);
+      transform: translate(-20%, 10px) scaleY(0.9);
+    }
+    50% {
+      transform: translate(0, 0) scaleY(0.9);
+    }
+    100% {
+      background: var(--color-bg-card);
+      transform: translate(-15%, -10px) scaleY(1);
+    }
+  }
+
+  @keyframes hideSignup {
+    0% {
+      background: var(--color-bg-card);
+      transform: translate(-15%, -10px) scaleY(1);
+    }
+    50% {
+      transform: translate(0, 0) scaleY(0.9);
+    }
+    100% {
+      background: var(--color-bg-secondary);
+      transform: translate(-20%, 10px) scaleY(0.9);
+    }
+  }
+
+  .btn-login {
+    transform: translateX(-15%);
+  }
+  
+  .btn-signup {
+    transform: translateX(15%);
+  }
+
+  .form-login fieldset {
+    transform: translateX(-20%);
+  }
+
+  .form-signup fieldset {
+    transform: translateX(20%);
+  }
+  
+  .form-wrapper.is-active fieldset {
+    transform: translateX(0);
   }
 }
