@@ -24,6 +24,9 @@ public class SecurityConfig {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    @Value("${FRONTEND_URL:http://localhost:3000}")
+    private String frontendUrl;
+
     // =========================================================
     // JWT DECODER
     // =========================================================
@@ -52,7 +55,7 @@ public class SecurityConfig {
                 new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:3000")
+                List.of(frontendUrl)
         );
 
         configuration.setAllowedMethods(
