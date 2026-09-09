@@ -389,18 +389,18 @@
 
 @media (max-width: 500px) {
   .auth-container {
-    padding: var(--space-md);
+    padding: var(--space-sm);
   }
   
   .auth-brand {
     font-size: var(--font-size-2xl);
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
   }
 
   .form {
     min-width: unset;
-    width: 90vw;
-    max-width: 360px;
+    width: 85vw;
+    max-width: 340px;
     padding: var(--space-lg) var(--space-md);
     margin-top: 30px;
   }
@@ -415,76 +415,77 @@
   }
 
   .form-wrapper.is-active .switcher-login {
-    transform: translateX(65px);
+    transform: translateX(100px);
   }
 
   .form-wrapper.is-active .switcher-signup {
-    transform: translateX(-65px);
+    transform: translateX(-100px);
   }
 
-  /* Reduce animation travel distance on mobile to prevent excessive horizontal movement/overflow */
+  /* To perfectly center a flex-child that is 50% of the container width,
+     it must be translated by exactly 50% of its own width. This fixes the cutoff. */
   @keyframes showLogin {
     0% {
       background: var(--color-bg-secondary);
-      transform: translate(20%, 10px);
+      transform: translate(60%, 10px);
     }
     50% {
-      transform: translate(0, 0);
+      transform: translate(25%, 0);
     }
     100% {
       background: var(--color-bg-card);
-      transform: translate(15%, -10px);
+      transform: translate(50%, -15px);
     }
   }
 
   @keyframes hideLogin {
     0% {
       background: var(--color-bg-card);
-      transform: translate(15%, -10px);
+      transform: translate(50%, -15px);
     }
     50% {
-      transform: translate(0, 0);
+      transform: translate(25%, 0);
     }
     100% {
       background: var(--color-bg-secondary);
-      transform: translate(20%, 10px);
+      transform: translate(60%, 10px);
     }
   }
 
   @keyframes showSignup {
     0% {
       background: var(--color-bg-secondary);
-      transform: translate(-20%, 10px) scaleY(0.9);
+      transform: translate(-60%, 10px) scaleY(0.9);
     }
     50% {
-      transform: translate(0, 0) scaleY(0.9);
+      transform: translate(-25%, 0) scaleY(0.9);
     }
     100% {
       background: var(--color-bg-card);
-      transform: translate(-15%, -10px) scaleY(1);
+      transform: translate(-50%, -15px) scaleY(1);
     }
   }
 
   @keyframes hideSignup {
     0% {
       background: var(--color-bg-card);
-      transform: translate(-15%, -10px) scaleY(1);
+      transform: translate(-50%, -15px) scaleY(1);
     }
     50% {
-      transform: translate(0, 0) scaleY(0.9);
+      transform: translate(-25%, 0) scaleY(0.9);
     }
     100% {
       background: var(--color-bg-secondary);
-      transform: translate(-20%, 10px) scaleY(0.9);
+      transform: translate(-60%, 10px) scaleY(0.9);
     }
   }
 
   .btn-login {
-    transform: translateX(-15%);
+    transform: translateX(0);
   }
   
   .btn-signup {
-    transform: translateX(15%);
+    transform: translateX(0);
   }
 
   .form-login fieldset {
