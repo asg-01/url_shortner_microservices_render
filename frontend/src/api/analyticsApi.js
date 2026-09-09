@@ -66,7 +66,7 @@ export const trackRedirect = async (shortCode, region) => {
  * @returns {Promise} Axios response
  */
 export const getAnalyticsDashboard = () => {
-  return api.get('/api/analytics/dashboard', { _silentError: true });
+  return api.get(`/api/analytics/dashboard?t=${new Date().getTime()}`, { _silentError: true });
 };
 
 /**

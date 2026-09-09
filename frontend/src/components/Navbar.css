@@ -97,3 +97,19 @@
   .navbar-username { display: none; }
   .navbar-logout-btn span { display: none; }
 }
+
+.navbar-logo-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

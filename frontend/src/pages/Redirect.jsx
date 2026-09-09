@@ -100,8 +100,9 @@ const Redirect = () => {
         } else if (res.status === 410) {
           setErrorStatus(410);
         } else if (res.ok) {
+          const data = await res.json();
           // Valid redirect — fire analytics then navigate
-          await fireAnalyticsAndRedirect();
+          await fireAnalyticsAndRedirect(data.originalUrl);
         } else {
           // Unknown error, just default to 404
           setErrorStatus(404);
@@ -112,7 +113,7 @@ const Redirect = () => {
       }
     };
 
-    const fireAnalyticsAndRedirect = async () => {
+    const fireAnalyticsAndRedirect = async (originalUrl) => {
       // Guard: only fire analytics once per mount
       if (analyticsTracked.current) return;
       analyticsTracked.current = true;
@@ -124,7 +125,12 @@ const Redirect = () => {
       await trackRedirect(shortCode, region);
 
       // Navigate to the actual redirect URL
-      window.location.href = `${GATEWAY_URL}/${shortCode}`;
+      if (originalUrl) {
+        window.location.href = originalUrl;
+      } else {
+        // Fallback if backend doesn't return originalUrl
+        window.location.href = `${GATEWAY_URL}/${shortCode}`;
+      }
     };
 
     checkStatus();
