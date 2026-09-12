@@ -3,12 +3,14 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { ToastContext } from '../context/ToastContext';
 import { getErrorMessage } from '../utils/errors';
-import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, Fingerprint } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { getLoginOptions, submitLoginCredential } from '../api/passkeyApi';
+import { prepareLoginOptions, credentialToJSON } from '../utils/webauthn';
 import './Auth.css';
 
 const Auth = () => {
-  const { login, signup, token } = useContext(AuthContext);
+  const { login, signup, token, loginWithToken } = useContext(AuthContext);
   const { success, error: showError } = useContext(ToastContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -62,6 +64,47 @@ const Auth = () => {
     }
   };
 
+  const handlePasskeyLogin = async () => {
+    setLoginError('');
+    setLoginLoading(true);
+    try {
+      // 1. Get options from backend
+      const optionsRes = await getLoginOptions();
+      const options = optionsRes.data;
+      const challengeId = options.challengeId;
+
+      // 2. Prepare options for WebAuthn API
+      const publicKey = prepareLoginOptions(options);
+
+      // 3. Prompt user to authenticate passkey
+      const credential = await navigator.credentials.get({ publicKey });
+
+      if (!credential) {
+        throw new Error('No credential returned');
+      }
+
+      // 4. Send credential to backend
+      const credentialJson = JSON.stringify(credentialToJSON(credential));
+      const res = await submitLoginCredential(challengeId, credentialJson);
+
+      // 5. Success -> use token
+      loginWithToken(res.data.token);
+      success('Welcome back!');
+      navigate('/dashboard');
+    } catch (err) {
+      console.error(err);
+      if (err.name === 'NotAllowedError' || err.message?.includes('cancel')) {
+        // User cancelled, do nothing
+      } else if (err.response?.status === 401 || err.response?.status === 404) {
+        setLoginError(err.response.data?.message || 'Passkey authentication failed.');
+      } else {
+        setLoginError('Failed to verify passkey.');
+      }
+    } finally {
+      setLoginLoading(false);
+    }
+  };
+
   const handleSignup = async (e) => {
     e.preventDefault();
     setSignupLoading(true);
@@ -80,15 +123,26 @@ const Auth = () => {
 
     try {
       // Fake delay for animation
-      await new Promise(r => setTimeout(r, 3000));
+      await new Promise(r => setTimeout(r, 1000)); // Shorter delay for auto-login
       await signup(signupUsername, signupEmail, signupPassword);
-      success('Account created successfully! Please log in.');
-      setIsLoginActive(true);
-      setLoginEmail(signupEmail);
-      setSignupUsername('');
-      setSignupEmail('');
-      setSignupPassword('');
-      setSignupConfirm('');
+      
+      // Auto login after successful signup
+      setSignupLoading(false);
+      setLoginLoading(true);
+      
+      try {
+        await login(signupEmail, signupPassword);
+        navigate('/setup-passkey');
+      } catch (loginErr) {
+        // Fallback to manual login if auto-login fails
+        success('Account created successfully! Please log in.');
+        setIsLoginActive(true);
+        setLoginEmail(signupEmail);
+        setSignupUsername('');
+        setSignupEmail('');
+        setSignupPassword('');
+        setSignupConfirm('');
+      }
     } catch (err) {
       const status = err.response?.status;
       const msg = err.response?.data?.message || err.response?.data?.error || '';
@@ -176,6 +230,21 @@ const Auth = () => {
                   'Login'
                 )}
               </button>
+
+              <div className="auth-divider">
+                <span>or</span>
+              </div>
+
+              <button 
+                type="button" 
+                className="btn-passkey" 
+                onClick={handlePasskeyLogin}
+                disabled={loginLoading}
+              >
+                <Fingerprint size={18} />
+                Sign in with Passkey
+              </button>
+
               <p className="auth-switch-text">
                 Don't have an account? <button type="button" className="auth-switch-link" onClick={() => setIsLoginActive(false)}>Sign up</button>
               </p>

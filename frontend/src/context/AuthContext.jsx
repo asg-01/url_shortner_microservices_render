@@ -81,8 +81,36 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
   }, []);
 
+  const loginWithToken = useCallback((receivedToken, fallbackEmail = '') => {
+    if (!receivedToken) {
+      throw new Error('No token provided.');
+    }
+    
+    // Minimal decoding to get a user object if possible
+    let decodedEmail = fallbackEmail || 'User';
+    try {
+      const payload = JSON.parse(atob(receivedToken.split('.')[1]));
+      if (payload.sub) {
+        decodedEmail = payload.sub; // typically email in Spring Security JWTs
+      }
+    } catch (e) {
+      // Ignore decode errors
+    }
+
+    const receivedUser = { email: decodedEmail };
+    
+    setToken(receivedToken);
+    setUser(receivedUser);
+    localStorage.setItem('token', receivedToken);
+    localStorage.setItem('user', JSON.stringify(receivedUser));
+  }, []);
+
+  const setPasskeyPromptSeen = useCallback(() => {
+    localStorage.setItem('passkey_prompt_seen', 'true');
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, token, loading, login, signup, logout, loginWithToken, setPasskeyPromptSeen }}>
       {children}
     </AuthContext.Provider>
   );

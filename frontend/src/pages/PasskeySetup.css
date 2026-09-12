@@ -1,0 +1,250 @@
+.passkey-page {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--color-bg-primary);
+  padding: var(--space-xl) var(--space-md);
+}
+
+.passkey-glow {
+  pointer-events: none;
+  position: absolute;
+  height: 480px;
+  width: 480px;
+  border-radius: 50%;
+  opacity: 0.25;
+  filter: blur(80px);
+}
+
+.passkey-glow-top {
+  top: -160px;
+  left: -160px;
+  background: radial-gradient(circle, var(--color-accent), transparent 70%);
+}
+
+.passkey-glow-bottom {
+  bottom: -160px;
+  right: -160px;
+  background: radial-gradient(circle, var(--color-purple), transparent 70%);
+  opacity: 0.2;
+}
+
+.passkey-skip-top {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  z-index: 10;
+}
+
+.passkey-skip-top:hover {
+  color: var(--color-text-primary);
+}
+
+.passkey-container {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  z-index: 1;
+}
+
+.passkey-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  padding: var(--space-2xl) var(--space-xl);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(24px);
+}
+
+.passkey-icon-wrapper {
+  position: relative;
+  margin: 0 auto var(--space-xl);
+  display: flex;
+  height: 80px;
+  width: 80px;
+  align-items: center;
+  justify-content: center;
+}
+
+.passkey-icon-inner {
+  display: flex;
+  height: 64px;
+  width: 64px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-glass);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.passkey-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-accent);
+}
+
+.animate-fingerprint {
+  animation: fingerprint-scan 1.8s ease-in-out infinite;
+}
+
+@keyframes fingerprint-scan {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.8; }
+  50% { transform: translateY(-3px) scale(1.08); opacity: 1; }
+}
+
+.passkey-content {
+  text-align: center;
+}
+
+.passkey-subtitle {
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+
+.passkey-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.text-gradient-accent {
+  background: linear-gradient(120deg, var(--color-accent), #7ab527);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.passkey-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.passkey-benefits {
+  margin-top: var(--space-xl);
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  text-align: left;
+}
+
+.passkey-benefit-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-glass);
+  padding: var(--space-md);
+  transition: background-color var(--transition-fast);
+}
+
+.passkey-benefit-item:hover {
+  background-color: var(--color-bg-glass-hover);
+}
+
+.passkey-benefit-icon {
+  display: flex;
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-glass);
+}
+
+.glow-accent-small {
+  box-shadow: 0 0 12px var(--color-accent-glow);
+  color: var(--color-accent);
+}
+
+.glow-purple-small {
+  box-shadow: 0 0 12px var(--color-purple-glow);
+  color: var(--color-purple);
+}
+
+.passkey-benefit-title {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.passkey-benefit-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 2px 0 0 0;
+}
+
+.passkey-actions {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.passkey-btn {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  border-radius: var(--radius-md);
+  padding: 12px var(--space-md);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+}
+
+.passkey-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.passkey-btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-bg-primary);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.passkey-btn-primary:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+.passkey-btn-secondary {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.passkey-btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-bg-glass-hover);
+  color: var(--color-text-primary);
+}
+
+.mt-32 {
+  margin-top: 32px;
+}

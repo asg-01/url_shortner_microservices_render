@@ -500,3 +500,58 @@
     transform: translateX(0);
   }
 }
+
+/* Passkey Integration */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: var(--space-md) 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.auth-divider span {
+  padding: 0 var(--space-md);
+}
+
+.btn-passkey {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  background-color: var(--color-bg-glass);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-md);
+}
+
+.btn-passkey:hover:not(:disabled) {
+  background-color: var(--color-bg-glass-hover);
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.btn-passkey:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-passkey svg {
+  color: var(--color-purple);
+}

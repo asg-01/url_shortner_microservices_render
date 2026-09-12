@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound';
 import ServerError from './pages/ServerError';
 import ServiceUnavailable from './pages/ServiceUnavailable';
 import TooManyRequests from './pages/TooManyRequests';
+import PasskeySetup from './pages/PasskeySetup';
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/setup-passkey"
+              element={
+                <ProtectedRoute>
+                  <PasskeySetup />
                 </ProtectedRoute>
               }
             />

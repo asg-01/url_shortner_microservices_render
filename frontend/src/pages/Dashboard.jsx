@@ -11,7 +11,9 @@ import EditModal from '../components/EditModal';
 import ConfirmDialog from '../components/ConfirmDialog';
 import LoadingSpinner from '../components/LoadingSpinner';
 import AnalyticsSection from '../components/AnalyticsSection';
-import { Link2, PlusCircle, BarChart3 } from 'lucide-react';
+import { Link2, PlusCircle, BarChart3, Fingerprint, ShieldCheck, CheckCircle2, Loader2 } from 'lucide-react';
+import { getRegisterOptions, submitRegisterCredential } from '../api/passkeyApi';
+import { prepareRegistrationOptions, credentialToJSON } from '../utils/webauthn';
 import './Dashboard.css';
 
 const MAX_URLS = 4;
@@ -72,6 +74,36 @@ const DashboardHome = () => {
     }
   };
 
+  const [passkeyLoading, setPasskeyLoading] = useState(false);
+  const [passkeyAdded, setPasskeyAdded] = useState(false);
+
+  const handleAddPasskey = async () => {
+    setPasskeyLoading(true);
+    try {
+      const optionsRes = await getRegisterOptions();
+      const options = optionsRes.data;
+      const challengeId = options.challengeId;
+
+      const publicKey = prepareRegistrationOptions(options);
+      const credential = await navigator.credentials.create({ publicKey });
+      const credentialJson = JSON.stringify(credentialToJSON(credential));
+      
+      await submitRegisterCredential(challengeId, credentialJson);
+      
+      success('Passkey added successfully!');
+      setPasskeyAdded(true);
+    } catch (err) {
+      console.error(err);
+      if (err.name === 'NotAllowedError' || err.message?.includes('cancel')) {
+        // user cancelled
+      } else {
+        showError(err.response?.data?.message || 'Failed to add passkey. Your device might not support it.');
+      }
+    } finally {
+      setPasskeyLoading(false);
+    }
+  };
+
   if (loading) {
     return <LoadingSpinner text="Loading your URLs" fullPage={true} />;
   }
@@ -91,6 +123,32 @@ const DashboardHome = () => {
           <span className="dash-counter-max">{MAX_URLS}</span>
           <span className="dash-counter-label">URLs used</span>
         </div>
+      </div>
+
+      {/* Security section */}
+      <div className="dash-security-banner">
+        <div className="dash-security-content">
+          <div className="dash-security-icon">
+            <ShieldCheck size={20} />
+          </div>
+          <div className="dash-security-text">
+            <h4>Account Security</h4>
+            <p>Faster, passwordless login with passkeys</p>
+          </div>
+        </div>
+        <button 
+          onClick={handleAddPasskey} 
+          disabled={passkeyLoading || passkeyAdded}
+          className={`dash-security-btn ${passkeyAdded ? 'passkey-added' : ''}`}
+        >
+          {passkeyLoading ? (
+            <><Loader2 size={16} className="spin-animation" /> Setup...</>
+          ) : passkeyAdded ? (
+            <><CheckCircle2 size={16} /> Added</>
+          ) : (
+            <><Fingerprint size={16} /> Add Passkey</>
+          )}
+        </button>
       </div>
 
       {/* URL creation */}
