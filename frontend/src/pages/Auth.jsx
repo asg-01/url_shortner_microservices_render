@@ -17,10 +17,13 @@ const Auth = () => {
   const isSignupRoute = location.pathname === '/signup';
 
   useEffect(() => {
+    // Only auto-redirect to dashboard on initial mount if already logged in
+    // This prevents overriding the explicit /setup-passkey redirect after signup
     if (token) {
       navigate('/dashboard');
     }
-  }, [token, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [isLoginActive, setIsLoginActive] = useState(!isSignupRoute);
 

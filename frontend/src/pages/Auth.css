@@ -555,3 +555,17 @@
 .btn-passkey svg {
   color: var(--color-purple);
 }
+
+/* Hide passkey elements when form is inactive to prevent bleed-through */
+.form-wrapper:not(.is-active) .auth-divider,
+.form-wrapper:not(.is-active) .btn-passkey {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+.form-wrapper.is-active .auth-divider,
+.form-wrapper.is-active .btn-passkey {
+  opacity: 1;
+  transition: opacity 0.4s ease-in;
+}
