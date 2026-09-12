@@ -129,7 +129,11 @@ public class SecurityConfig {
 
                         .pathMatchers(
                                 "/api/users/signup",
-                                "/api/users/login"
+                                "/api/users/login",
+
+                                // Passkey login
+                                "/api/auth/passkey/login/options",
+                                "/api/auth/passkey/login"
                         ).permitAll()
 
                         // -------------------------------------------------
