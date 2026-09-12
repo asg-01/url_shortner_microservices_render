@@ -91,7 +91,16 @@ const Auth = () => {
       const res = await submitLoginCredential(challengeId, credentialJson);
 
       // 5. Success -> use token
-      loginWithToken(res.data.token);
+      const newToken = res.data.token;
+      try {
+        const payload = JSON.parse(atob(newToken.split('.')[1]));
+        if (payload.sub) {
+          localStorage.setItem(`hasPasskey_${payload.sub}`, 'true');
+        }
+      } catch (e) {
+        // Ignore
+      }
+      loginWithToken(newToken);
       success('Welcome back!');
       navigate('/dashboard');
     } catch (err) {

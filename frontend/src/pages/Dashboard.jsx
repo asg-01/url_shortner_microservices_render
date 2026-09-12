@@ -74,8 +74,11 @@ const DashboardHome = () => {
     }
   };
 
+  const hasPasskeyKey = user?.email ? `hasPasskey_${user.email}` : null;
   const [passkeyLoading, setPasskeyLoading] = useState(false);
-  const [passkeyAdded, setPasskeyAdded] = useState(false);
+  const [passkeyAdded, setPasskeyAdded] = useState(() => {
+    return hasPasskeyKey ? localStorage.getItem(hasPasskeyKey) === 'true' : false;
+  });
 
   const handleAddPasskey = async () => {
     setPasskeyLoading(true);
@@ -91,6 +94,7 @@ const DashboardHome = () => {
       await submitRegisterCredential(challengeId, credentialJson);
       
       success('Passkey added successfully!');
+      if (hasPasskeyKey) localStorage.setItem(hasPasskeyKey, 'true');
       setPasskeyAdded(true);
     } catch (err) {
       console.error(err);

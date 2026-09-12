@@ -44,6 +44,16 @@ const PasskeySetup = () => {
       await submitRegisterCredential(challengeId, credentialJson);
 
       success('Passkey added successfully!');
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          if (payload.sub) {
+            localStorage.setItem(`hasPasskey_${payload.sub}`, 'true');
+          }
+        } catch (e) {
+          // Ignore
+        }
+      }
       setPasskeyPromptSeen();
       setAdded(true);
     } catch (err) {
