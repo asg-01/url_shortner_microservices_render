@@ -41,7 +41,8 @@
                             .requestMatchers(
                                     "/api/users/signup",
                                     "/api/users/login",
-                                    "/actuator/health"
+                                    "/actuator/health",
+                                    "/internal/keepalive"
                             ).permitAll()
 
                             // Everything else requires authentication
