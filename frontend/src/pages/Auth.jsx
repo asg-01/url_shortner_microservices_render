@@ -92,7 +92,10 @@ const Auth = () => {
     } catch (err) {
       const status = err.response?.status;
       const msg = err.response?.data?.message || err.response?.data?.error || '';
-      if (status === 400 && msg) {
+      
+      if (msg && msg.toLowerCase().includes('duplicate entry')) {
+        setSignupError('Email already registered. Try to log in.');
+      } else if (status === 400 && msg) {
         setSignupError(msg);
       } else {
         setSignupError('Something went wrong. Please try again.');

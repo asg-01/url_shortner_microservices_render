@@ -122,7 +122,7 @@ const UrlCard = ({ url, onEdit, onDelete, onStatusChange, onAnalyticsClick }) =>
         <div className="url-card-header">
           <div className="url-card-short">
             <a href={publicUrl} className="url-card-short-link">
-              {publicUrl}
+              {publicUrl.replace(/^https?:\/\//, '')}
               <ExternalLink size={14} />
             </a>
           </div>
